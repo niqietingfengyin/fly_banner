@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>Personal Banners</title>
+<style type='text/css'>
+p { 
+   text-align:left;
+   }
+.bg:focus{
+        //color:green;
+        background-color:yellow;   
+       }
+.sp{
+     color:red;
+    }
+</style>
+<script>
+function validateNonEmpty(input,hText)
+{
+if(document.getElementById(input).value.length==0)
+{
+  if(hText!=null)
+  { hText.innerHTML="Please enter a value";
+    return false;
+	}
+}
+else
+  {
+    if(hText!=null)
+	 hText.innerHTML="";
+     return true;
+  }
+}
+function validateLength(minlength,maxlength,inputField,hText)
+{  
+   var bannerMsg=document.getElementById(inputField).value.length;
+  if(validateNonEmpty(inputField,hText))
+  {
+      if(bannerMsg<minlength||bannerMsg>maxlength)
+     {
+       if(hText!=null)
+       hText.innerHTML="Please enter a value "+minlength+" to "+maxlength+" characters in length";
+        return false;
+     }
+     else
+       {
+       if(hText!=null)
+       hText.innerHTML=" ";
+       return true;
+     }
+    }
+}
+function validateZIPCode(inputField)
+{ 
+  if(validateNonEmpty(inputField,helpText2))
+  {
+     var loc=document.getElementById(inputField).value;
+    if(loc.length!=5||isNaN(loc))
+    {
+    if(helpText2!=null)
+	  {helpText2.innerHTML="Please enter exactly 5 digitals.";
+       return false;
+         }
+     }
+      else
+      {
+      if(helpText2!=null)
+	      {helpText2.innerHTML="";
+             return true; }
+	   }
+	}
+}
+function validateRegEx(regx,input,hText,hMessage)
+{
+   if(!regx.test(input))
+   {
+     if(hText!=null)
+	  {
+	    hText.innerHTML=hMessage;
+	    return false;
+	  }
+   }
+   else
+   {
+    if(hText!=null)
+	  {
+	    hText.innerHTML="";
+	    return true;
+	  }
+   }
+}
+function validateDate(input)
+{
+  if(validateNonEmpty('date',helpText3))
+  {
+  validateRegEx(/^\d{2}\/\d{2}\/(\d{2}|\d{4})$/,input,helpText3,'Please input the date format 10/03/1999 or 10/03/99.');
+   }
+}
+function validatePhone(input)
+{
+if(validateNonEmpty('pho',helpText5))
+ {
+   validateRegEx(/^\d{4}-\d{4}$/,input,helpText5,'Please enter your phone number like: 6985-1234');
+  }
+}
+function validateEmail(inputField,hText)
+{
+var email=document.getElementById(inputField).value;
+  if(validateNonEmpty(inputField,hText))
+     {
+	 validateRegEx(/^[\w\.-_\+]+@[\w-]+(\.\w{2,4})$/,email,hText,'Please check your email format');
+         }
+
+}
+</script>
+</head>
+<body>
+<center>
+<img src='./logo.png' alt='flying banner'>
+<br>
+<br>
+<br>
+<p >
+Enter the banner message:<input class='bg' type='text' id='ban' size=40 maxlength=40 onblur="validateLength(3,32,'ban',helpText1)">
+<span id='helpText1' class='sp'></span>
+</p>
+<p>
+Enter ZIP code of the location: <input class='bg' type="text" id='loc' size=30  onblur="validateZIPCode('loc',helpText2)">
+<span id='helpText2' class='sp'></span>
+</p>
+<p>
+Enter the date for the message to be shown:<input class='bg' type='text' id='date' size=15 onblur="validateDate(document.getElementById('date').value,helpText3)">
+<span id='helpText3' class='sp'></span>
+</p>
+<p>
+Enter your name:<input class='bg' type='text' id='name' size=51 onblur="validateNonEmpty('name',helpText4)">
+<span id='helpText4' class='sp'></span>
+</p>
+<p>
+Enter your phone number:<input class='bg' type='text' id='pho' size=40 onblur="validatePhone(document.getElementById('pho').value)">
+<span id='helpText5' class='sp'></span>
+</p>
+<p>
+Enter your email address:<input class='bg' type='text' id='email' size=39 onblur="validateEmail('email',helpText6)">
+<span id='helpText6' class='sp'></span>
+</p>
+</center>
+</body>
+</html>
